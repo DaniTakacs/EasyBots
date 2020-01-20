@@ -9,6 +9,8 @@ public class Main {
         char player = '@';
         char[][] map = generateMap();
         map = setStartingPoint(map, player);
+        int[] playerCoordinates = getPlayerPosition(map, player);
+        System.out.println(Arrays.toString(playerCoordinates));
         System.out.println(Arrays.deepToString(map));
     }
 
@@ -59,5 +61,25 @@ public class Main {
 
         map[x][y] = player;
         return map;
+    }
+
+
+    public static int[] getPlayerPosition(char[][] map, char player){
+        int rows = 30;
+        int columns = 50;
+        int playerX = 0;
+        int playerY = 0;
+        int[] playerXY = new int[2];
+        for(int x = 0; x < rows; x++){
+            for(int y = 0; y < columns; y++){
+                if(map[x][y] == '@'){
+                    playerX = x;
+                    playerY = y;
+                }
+            }
+        }
+        playerXY[0] = playerX;
+        playerXY[1] = playerY;
+        return playerXY;
     }
 }
