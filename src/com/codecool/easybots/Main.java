@@ -8,8 +8,10 @@ public class Main {
     public static void main(String[] args) {
         // write your code here
         char player = '@';
+	char robot = '#';
         char[][] map = generateMap();
         map = setStartingPoint(map, player);
+	map = setStartingRobot(map, robot);
         int[] playerCoordinates = getPlayerPosition(map, player);
         printMap(map);
     }
@@ -60,6 +62,18 @@ public class Main {
         int y = rand.nextInt(columnMax) + min;
 
         map[x][y] = player;
+        return map;
+    }
+
+    public static char[][] setStartingRobot(char[][] map, char robot) {
+        Random rand = new Random();
+        int rowMax = 29;
+        int min = 1;
+        int columnMax = 49;
+        int x = rand.nextInt(rowMax) + min;
+        int y = rand.nextInt(columnMax) + min;
+
+        map[x][y] = robot;
         return map;
     }
 
