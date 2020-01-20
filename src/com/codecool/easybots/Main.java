@@ -1,4 +1,5 @@
 package com.codecool.easybots;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -10,8 +11,7 @@ public class Main {
         char[][] map = generateMap();
         map = setStartingPoint(map, player);
         int[] playerCoordinates = getPlayerPosition(map, player);
-        System.out.println(Arrays.toString(playerCoordinates));
-        System.out.println(Arrays.deepToString(map));
+        printMap(map);
     }
 
     public static char[][] generateMap() {
@@ -24,15 +24,15 @@ public class Main {
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
                 if (x == 0 || x == (rows - 1)) {
-                    map[x][y] = '-';
+                    map[x][y] = '_';
 
                 } else {
                     map[x][y] = ' ';
                 }
             }
         }
-        map[0][0] = '+';
-        map[0][lastColumnElement] = '+';
+        map[0][0] = '_';
+        map[0][lastColumnElement] = '_';
         map[lastRowElement][0] = '+';
         map[lastRowElement][lastColumnElement] = '+';
         for (int x = 0; x < rows; x++) {
@@ -51,7 +51,7 @@ public class Main {
     }
 
 
-    public static char[][] setStartingPoint(char[][] map, char player){
+    public static char[][] setStartingPoint(char[][] map, char player) {
         Random rand = new Random();
         int rowMax = 29;
         int min = 1;
@@ -64,15 +64,15 @@ public class Main {
     }
 
 
-    public static int[] getPlayerPosition(char[][] map, char player){
+    public static int[] getPlayerPosition(char[][] map, char player) {
         int rows = 30;
         int columns = 50;
         int playerX = 0;
         int playerY = 0;
         int[] playerXY = new int[2];
-        for(int x = 0; x < rows; x++){
-            for(int y = 0; y < columns; y++){
-                if(map[x][y] == '@'){
+        for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < columns; y++) {
+                if (map[x][y] == '@') {
                     playerX = x;
                     playerY = y;
                 }
@@ -82,4 +82,13 @@ public class Main {
         playerXY[1] = playerY;
         return playerXY;
     }
+
+    public static void printMap(char[][] map) {
+        for (int y = 0; y < 30; y++) {
+            StringBuilder strBuilder = new StringBuilder("");
+            System.out.println(strBuilder.append(map[y]));
+
+        }
+    }
 }
+
