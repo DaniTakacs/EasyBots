@@ -1,11 +1,14 @@
 package com.codecool.easybots;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
+        char player = '@';
         char[][] map = generateMap();
+        map = setStartingPoint(map, player);
         System.out.println(Arrays.deepToString(map));
     }
 
@@ -42,6 +45,19 @@ public class Main {
             }
 
         }
+        return map;
+    }
+
+
+    public static char[][] setStartingPoint(char[][] map, char player){
+        Random rand = new Random();
+        int rowMax = 29;
+        int min = 1;
+        int columnMax = 49;
+        int x = rand.nextInt(rowMax) + min;
+        int y = rand.nextInt(columnMax) + min;
+
+        map[x][y] = player;
         return map;
     }
 }
