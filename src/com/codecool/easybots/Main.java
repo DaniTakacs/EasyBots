@@ -19,7 +19,6 @@ public class Main {
         printMap(map);
         Scanner in = new Scanner(System.in);
         char input = in.next().charAt(0);
-        //in.close();
         if (input == 'd'){
             System.out.println("moved right!");
         }
@@ -27,6 +26,8 @@ public class Main {
         System.out.println(Arrays.toString(playerCoordinates));
         System.out.println(Arrays.toString(newPlayerCoordinates));
         System.out.println("Your input: " + input);
+        char[][] newMap = modifyMap(map, newPlayerCoordinates);
+        printMap(newMap);
     }
 
     public static char[][] generateMap() {
@@ -46,10 +47,6 @@ public class Main {
                 }
             }
         }
-        map[0][0] = '_';
-        map[0][lastColumnElement] = '_';
-        map[lastRowElement][0] = '+';
-        map[lastRowElement][lastColumnElement] = '+';
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
                 if (x > 0 && x < (rows - 1)) {
@@ -147,6 +144,20 @@ public class Main {
             playerPlace[1] = leftY;
         }
         return playerPlace;
+    }
+
+    public static char[][] modifyMap(char[][] map, int[] newPlayerCoordinates){
+        int playerX = newPlayerCoordinates[0];
+        int playerY = newPlayerCoordinates[1];
+        for (int x = 0; x < 30; x++) {
+            for (int y = 0; y < 50; y++) {
+                if (map[x][y] == '@') {
+                    map[x][y] = ' ';
+                }
+            }
+        }
+        map[playerX][playerY] = '@';
+        return map;
     }
 }
 
