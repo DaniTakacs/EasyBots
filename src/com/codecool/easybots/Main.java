@@ -1,5 +1,6 @@
 package com.codecool.easybots;
-
+import java.util.Scanner;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -16,6 +17,16 @@ public class Main {
         }
         int[] playerCoordinates = getPlayerPosition(map, player);
         printMap(map);
+        Scanner in = new Scanner(System.in);
+        char input = in.next().charAt(0);
+        //in.close();
+        if (input == 'd'){
+            System.out.println("moved right!");
+        }
+        int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
+        System.out.println(Arrays.toString(playerCoordinates));
+        System.out.println(Arrays.toString(newPlayerCoordinates));
+        System.out.println("Your input: " + input);
     }
 
     public static char[][] generateMap() {
@@ -111,6 +122,31 @@ public class Main {
             System.out.println(strBuilder.append(map[y]));
 
         }
+    }
+
+    public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map){
+        int baseX = playerCoordinates[0];
+        int baseY = playerCoordinates[1];
+        int[] playerPlace = {baseX, baseY};
+        char[][] currentMap = map;
+        int upX = playerPlace[0] + 1;
+        int downX = playerPlace[0] - 1;
+        int rightY = playerPlace[1] + 1;
+        int leftY = playerPlace[1] - 1;
+
+        if(input == 'w' && currentMap[upX][baseY] != '_'){
+            playerPlace[0] = upX;
+        }
+        if(input == 's' && currentMap[downX][baseY] != '_'){
+            playerPlace[0] = downX;
+        }
+        if(input == 'd' && currentMap[baseX][rightY] != '|'){
+            playerPlace[1] = rightY;
+        }
+        if(input == 'a' && currentMap[baseX][leftY] != '|'){
+            playerPlace[1] = leftY;
+        }
+        return playerPlace;
     }
 }
 
