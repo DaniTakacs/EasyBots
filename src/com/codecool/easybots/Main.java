@@ -12,7 +12,7 @@ public class Main {
         char[][] map = generateMap();
         map = setStartingPoint(map, player);
         for (int i = 0; i < 3; i++) {
-            map = setStartingRobot(map, robot);
+            map = setStartingPoint(map, robot);
         }
         printMap(map);
         do {
@@ -61,7 +61,7 @@ public class Main {
     }
 
 
-    public static char[][] setStartingPoint(char[][] map, char player) {
+    public static char[][] setStartingPoint(char[][] map, char character) {
         Random rand = new Random();
         int rowMax = 29;
         int min = 1;
@@ -69,24 +69,9 @@ public class Main {
         int x = rand.nextInt(rowMax) + min;
         int y = rand.nextInt(columnMax) + min;
         if (map[x][y] == ' ') {
-            map[x][y] = player;
+            map[x][y] = character;
         } else {
-            setStartingPoint(map, player);
-        }
-        return map;
-    }
-
-    public static char[][] setStartingRobot(char[][] map, char robot) {
-        Random rand = new Random();
-        int rowMax = 29;
-        int min = 1;
-        int columnMax = 49;
-        int x = rand.nextInt(rowMax) + min;
-        int y = rand.nextInt(columnMax) + min;
-        if (map[x][y] == ' ') {
-            map[x][y] = robot;
-        } else {
-            setStartingRobot(map, robot);
+            setStartingPoint(map, character);
         }
         return map;
     }
