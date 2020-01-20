@@ -1,13 +1,12 @@
 package com.codecool.easybots;
 import java.util.Scanner;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
+        boolean endOfGame = false;
         char player = '@';
         char robot = '#';
         char[][] map = generateMap();
@@ -15,19 +14,18 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             map = setStartingRobot(map, robot);
         }
-        int[] playerCoordinates = getPlayerPosition(map, player);
         printMap(map);
-        Scanner in = new Scanner(System.in);
-        char input = in.next().charAt(0);
-        if (input == 'd'){
-            System.out.println("moved right!");
+        do {
+            int[] playerCoordinates = getPlayerPosition(map);
+            printMap(map);
+            Scanner in = new Scanner(System.in);
+            char input = in.next().charAt(0);
+
+            int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
+            char[][] newMap = modifyMap(map, newPlayerCoordinates);
+            printMap(newMap);
         }
-        int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
-        System.out.println(Arrays.toString(playerCoordinates));
-        System.out.println(Arrays.toString(newPlayerCoordinates));
-        System.out.println("Your input: " + input);
-        char[][] newMap = modifyMap(map, newPlayerCoordinates);
-        printMap(newMap);
+        while (!endOfGame);
     }
 
     public static char[][] generateMap() {
@@ -94,7 +92,7 @@ public class Main {
     }
 
 
-    public static int[] getPlayerPosition(char[][] map, char player) {
+    public static int[] getPlayerPosition(char[][] map) {
         int rows = 30;
         int columns = 50;
         int playerX = 0;
@@ -126,8 +124,8 @@ public class Main {
         int baseY = playerCoordinates[1];
         int[] playerPlace = {baseX, baseY};
         char[][] currentMap = map;
-        int upX = playerPlace[0] + 1;
-        int downX = playerPlace[0] - 1;
+        int upX = playerPlace[0] - 1;
+        int downX = playerPlace[0] + 1;
         int rightY = playerPlace[1] + 1;
         int leftY = playerPlace[1] - 1;
 
@@ -157,7 +155,13 @@ public class Main {
             }
         }
         map[playerX][playerY] = '@';
+        clearScreen();
         return map;
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
 
