@@ -14,33 +14,44 @@ public class Main {
         boolean endOfGame = false;
         char player = '@';
         char robot = '#';
+
         ArrayList<Integer[]> listOfRobots = new ArrayList<>();
+
         char[][] map = generateMap();
+
         map = setStartingPoint(map, player, listOfRobots);
         for (int i = 0; i < 3; i++) {
             map = setStartingPoint(map, robot, listOfRobots);
         }
+
+
+        //get robot coordinates from ArrayList
+        int robotCounter = listOfRobots.size();
+        int[][] allRobotsPos = new int[robotCounter][2];
+        for (int x = 0; x < robotCounter; x++) {
+            for (int y = 0; y < 2; y++) {
+                allRobotsPos[x][y] = listOfRobots.get(x)[y];
+            }
+        }
+        System.out.println(Arrays.toString(allRobotsPos));
+        //
+
         printMap(map);
+
         do {
             int[] playerCoordinates = getCharacterPosition(map, player);
             printMap(map);
             Scanner in = new Scanner(System.in);
             char input = in.next().charAt(0);
 
+            //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
             char[][] newMap = modifyMap(map, newPlayerCoordinates);
             printMap(newMap);
 
-            //get robot coordinates from ArrayList
-            int robotCounter = listOfRobots.size();
-            int[][] allRobotsPos = new int[robotCounter][2];
-            for(int x = 0; x < robotCounter; x++){
-                for(int y = 0; y < 2; y++){
-                    allRobotsPos[x][y] = listOfRobots.get(x)[y];
-                }
-            }
-            //
-            System.out.println(Arrays.toString(allRobotsPos[0]));
+            //Robot movement
+
+
         }
         while (!endOfGame);
     }
@@ -90,8 +101,9 @@ public class Main {
             Integer[] pos = {y, x};
             if (character == '#') {
                 listOfRobots.add(pos);
-                for (int i=0; i<listOfRobots.size();i++){
-                System.out.println(Arrays.toString(listOfRobots.get(i)));}
+                for (int i = 0; i < listOfRobots.size(); i++) {
+                    System.out.println(Arrays.toString(listOfRobots.get(i)));
+                }
             }
         } else {
             setStartingPoint(map, character, listOfRobots);
@@ -154,6 +166,43 @@ public class Main {
         return playerPlace;
     }
 
+    public static int[] moveRobots(int[][] robotCoordinates, char[][] map) {
+
+        char[][] currentMap = map;
+        int[] playerPosition = getCharacterPosition(map, '@');
+
+        for (int i = 0; i < robotCoordinates.length; i++) {
+
+            // Checks the absolute x and y distance
+            int distanceFromX = Math.abs(robotCoordinates[i][0] - playerPosition[0]);
+            int distanceFromY = Math.abs(robotCoordinates[i][1] - playerPosition[1]);
+
+            //moves on the X axis
+            if (distanceFromX < distanceFromY) {
+                if (robotCoordinates[i][0] - playerPosition[0] > 0) {
+                    int[] robotNewCoordinates = {(robotCoordinates[i][0] - 1), robotCoordinates[i][1]};
+                    return robotNewCoordinates;
+                }
+                if (robotCoordinates[i][0] - playerPosition[0] < 0) {
+                    int[] robotNewCoordinates = {(robotCoordinates[i][0] + 1), robotCoordinates[i][1]};
+                    return robotNewCoordinates;
+                }
+
+            }
+            //moves on the Y axis
+            else {
+                if (robotCoordinates[i][1] - playerPosition[1] > 0) {
+                    int[] robotNewCoordinates = {robotCoordinates[i][0], (robotCoordinates[i][1] - 1)};
+                    return robotNewCoordinates;
+                }
+                if (robotCoordinates[i][1] - playerPosition[1] < 0) {
+                    int[] robotNewCoordinates = {robotCoordinates[i][0], (robotCoordinates[i][1] + 1)};
+                    return robotNewCoordinates;
+                }
+            }
+        }
+    }
+
 
     public static char[][] modifyMap(char[][] map, int[] newPlayerCoordinates) {
         int playerX = newPlayerCoordinates[0];
@@ -175,16 +224,6 @@ public class Main {
         System.out.flush();
     }
 
-
-    public static int[] convertIntegers(ArrayList<Integer> integers)
-    {
-        int[] ret = new int[integers.size()];
-        for (int i=0; i < ret.length; i++)
-        {
-            ret[i] = integers.get(i).intValue();
-        }
-        return ret;
-    }
 }
 
 
