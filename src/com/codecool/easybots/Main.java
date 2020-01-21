@@ -30,6 +30,17 @@ public class Main {
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
             char[][] newMap = modifyMap(map, newPlayerCoordinates);
             printMap(newMap);
+
+            //get robot coordinates from ArrayList
+            int robotCounter = listOfRobots.size();
+            int[][] allRobotsPos = new int[robotCounter][2];
+            for(int x = 0; x < robotCounter; x++){
+                for(int y = 0; y < 2; y++){
+                    allRobotsPos[x][y] = listOfRobots.get(x)[y];
+                }
+            }
+            //
+            System.out.println(Arrays.toString(allRobotsPos[0]));
         }
         while (!endOfGame);
     }
@@ -79,7 +90,6 @@ public class Main {
             Integer[] pos = {y, x};
             if (character == '#') {
                 listOfRobots.add(pos);
-                System.out.println(listOfRobots);
             }
         } else {
             setStartingPoint(map, character, listOfRobots);
@@ -161,6 +171,17 @@ public class Main {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+
+    public static int[] convertIntegers(ArrayList<Integer> integers)
+    {
+        int[] ret = new int[integers.size()];
+        for (int i=0; i < ret.length; i++)
+        {
+            ret[i] = integers.get(i).intValue();
+        }
+        return ret;
     }
 }
 
