@@ -14,10 +14,11 @@ public class Main {
         boolean endOfGame = false;
         char player = '@';
         char robot = '#';
+        ArrayList<Integer[]> listOfRobots = new ArrayList<>();
         char[][] map = generateMap();
-        map = setStartingPoint(map, player);
+        map = setStartingPoint(map, player, listOfRobots);
         for (int i = 0; i < 3; i++) {
-            map = setStartingPoint(map, robot);
+            map = setStartingPoint(map, robot, listOfRobots);
         }
         printMap(map);
         do {
@@ -66,24 +67,22 @@ public class Main {
     }
 
 
-    public static char[][] setStartingPoint(char[][] map, char character) {
+    public static char[][] setStartingPoint(char[][] map, char character, ArrayList<Integer[]> listOfRobots) {
         Random rand = new Random();
         int rowMax = 29;
         int min = 1;
         int columnMax = 49;
-        ArrayList<String[]> listOfRobots = new ArrayList<>();
         int x = rand.nextInt(rowMax) + min;
         int y = rand.nextInt(columnMax) + min;
         if (map[x][y] == ' ') {
             map[x][y] = character;
-            String[] pos = {String.valueOf(y), String.valueOf(x)};
+            Integer[] pos = {y, x};
             if (character == '#') {
+                listOfRobots.add(pos);
+                System.out.println(listOfRobots);
             }
-            listOfRobots.add(pos);
-            System.out.println(listOfRobots);
-
         } else {
-            setStartingPoint(map, character);
+            setStartingPoint(map, character, listOfRobots);
         }
         return map;
     }
