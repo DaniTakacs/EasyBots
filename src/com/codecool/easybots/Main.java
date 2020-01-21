@@ -1,6 +1,11 @@
 package com.codecool.easybots;
+
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -66,10 +71,17 @@ public class Main {
         int rowMax = 29;
         int min = 1;
         int columnMax = 49;
+        ArrayList<String[]> listOfRobots = new ArrayList<>();
         int x = rand.nextInt(rowMax) + min;
         int y = rand.nextInt(columnMax) + min;
         if (map[x][y] == ' ') {
             map[x][y] = character;
+            String[] pos = {String.valueOf(y), String.valueOf(x)};
+            if (character == '#') {
+            }
+            listOfRobots.add(pos);
+            System.out.println(listOfRobots);
+
         } else {
             setStartingPoint(map, character);
         }
@@ -106,7 +118,7 @@ public class Main {
     }
 
 
-    public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map){
+    public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map) {
         int baseX = playerCoordinates[0];
         int baseY = playerCoordinates[1];
         int[] playerPlace = {baseX, baseY};
@@ -116,23 +128,23 @@ public class Main {
         int rightY = playerPlace[1] + 1;
         int leftY = playerPlace[1] - 1;
 
-        if(input == 'w' && currentMap[upX][baseY] != '_'){
+        if (input == 'w' && currentMap[upX][baseY] != '_') {
             playerPlace[0] = upX;
         }
-        if(input == 's' && currentMap[downX][baseY] != '_'){
+        if (input == 's' && currentMap[downX][baseY] != '_') {
             playerPlace[0] = downX;
         }
-        if(input == 'd' && currentMap[baseX][rightY] != '|'){
+        if (input == 'd' && currentMap[baseX][rightY] != '|') {
             playerPlace[1] = rightY;
         }
-        if(input == 'a' && currentMap[baseX][leftY] != '|'){
+        if (input == 'a' && currentMap[baseX][leftY] != '|') {
             playerPlace[1] = leftY;
         }
         return playerPlace;
     }
 
 
-    public static char[][] modifyMap(char[][] map, int[] newPlayerCoordinates){
+    public static char[][] modifyMap(char[][] map, int[] newPlayerCoordinates) {
         int playerX = newPlayerCoordinates[0];
         int playerY = newPlayerCoordinates[1];
         for (int x = 0; x < 30; x++) {
@@ -143,11 +155,10 @@ public class Main {
             }
         }
         map[playerX][playerY] = '@';
-        clearScreen();
         return map;
     }
 
-    
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
