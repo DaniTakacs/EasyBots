@@ -90,6 +90,8 @@ public class Main {
             Integer[] pos = {y, x};
             if (character == '#') {
                 listOfRobots.add(pos);
+                for (int i=0; i<listOfRobots.size();i++){
+                System.out.println(Arrays.toString(listOfRobots.get(i)));}
             }
         } else {
             setStartingPoint(map, character, listOfRobots);
@@ -184,4 +186,6 @@ public class Main {
         return ret;
     }
 }
+
+
 
