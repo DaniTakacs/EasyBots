@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e8fa81e-39f7-4a71-89ac-c2448c0329cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/codecool/easybots/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/codecool/easybots/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/codecool/easybots/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/codecool/easybots/Main.java" afterDir="false" />
     </list>

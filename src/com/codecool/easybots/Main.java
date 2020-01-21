@@ -16,7 +16,7 @@ public class Main {
         }
         printMap(map);
         do {
-            int[] playerCoordinates = getPlayerPosition(map);
+            int[] playerCoordinates = getCharacterPosition(map, player);
             printMap(map);
             Scanner in = new Scanner(System.in);
             char input = in.next().charAt(0);
@@ -77,24 +77,25 @@ public class Main {
     }
 
 
-    public static int[] getPlayerPosition(char[][] map) {
+    public static int[] getCharacterPosition(char[][] map, char ch) {
         int rows = 30;
         int columns = 50;
-        int playerX = 0;
-        int playerY = 0;
-        int[] playerXY = new int[2];
+        int characterX = 0;
+        int characterY = 0;
+        int[] characterXY = new int[2];
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
-                if (map[x][y] == '@') {
-                    playerX = x;
-                    playerY = y;
+                if (map[x][y] == ch) {
+                    characterX = x;
+                    characterY = y;
                 }
             }
         }
-        playerXY[0] = playerX;
-        playerXY[1] = playerY;
-        return playerXY;
+        characterXY[0] = characterX;
+        characterXY[1] = characterY;
+        return characterXY;
     }
+
 
     public static void printMap(char[][] map) {
         for (int y = 0; y < 30; y++) {
@@ -103,6 +104,7 @@ public class Main {
 
         }
     }
+
 
     public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map){
         int baseX = playerCoordinates[0];
@@ -129,6 +131,7 @@ public class Main {
         return playerPlace;
     }
 
+
     public static char[][] modifyMap(char[][] map, int[] newPlayerCoordinates){
         int playerX = newPlayerCoordinates[0];
         int playerY = newPlayerCoordinates[1];
@@ -144,6 +147,7 @@ public class Main {
         return map;
     }
 
+    
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
