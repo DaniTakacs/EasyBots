@@ -33,7 +33,6 @@ public class Main {
                 allRobotsPos[x][y] = listOfRobots.get(x)[y];
             }
         }
-        System.out.println(Arrays.toString(allRobotsPos));
         //
 
         printMap(map);
@@ -48,7 +47,13 @@ public class Main {
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
             char[][] newMap = modifyMap(map, newPlayerCoordinates);
             printMap(newMap);
-
+            System.out.println(Arrays.toString(newPlayerCoordinates));
+            System.out.println("playercoord UP: ");
+            for(int x = 0; x < robotCounter; x++){
+                System.out.println(Arrays.toString(allRobotsPos[x]));
+                int[] newRobotPosition = moveRobot(allRobotsPos, map, x);
+                System.out.println(Arrays.toString(newRobotPosition));
+            }
             //Robot movement
 
 
@@ -98,12 +103,9 @@ public class Main {
         int y = rand.nextInt(columnMax) + min;
         if (map[x][y] == ' ') {
             map[x][y] = character;
-            Integer[] pos = {y, x};
+            Integer[] pos = {x, y};
             if (character == '#') {
                 listOfRobots.add(pos);
-                for (int i = 0; i < listOfRobots.size(); i++) {
-                    System.out.println(Arrays.toString(listOfRobots.get(i)));
-                }
             }
         } else {
             setStartingPoint(map, character, listOfRobots);
@@ -166,41 +168,40 @@ public class Main {
         return playerPlace;
     }
 
-    public static int[] moveRobots(int[][] robotCoordinates, char[][] map) {
+    public static int[] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
         char[][] currentMap = map;
         int[] playerPosition = getCharacterPosition(map, '@');
+        int[] robotNewCoordinates = new int[2];
 
-        for (int i = 0; i < robotCoordinates.length; i++) {
+        // Checks the absolute x and y distance
+        int distanceFromX = Math.abs(robotCoordinates[robotNum][0] - playerPosition[0]);
+        int distanceFromY = Math.abs(robotCoordinates[robotNum][1] - playerPosition[1]);
 
-            // Checks the absolute x and y distance
-            int distanceFromX = Math.abs(robotCoordinates[i][0] - playerPosition[0]);
-            int distanceFromY = Math.abs(robotCoordinates[i][1] - playerPosition[1]);
-
-            //moves on the X axis
-            if (distanceFromX < distanceFromY) {
-                if (robotCoordinates[i][0] - playerPosition[0] > 0) {
-                    int[] robotNewCoordinates = {(robotCoordinates[i][0] - 1), robotCoordinates[i][1]};
-                    return robotNewCoordinates;
-                }
-                if (robotCoordinates[i][0] - playerPosition[0] < 0) {
-                    int[] robotNewCoordinates = {(robotCoordinates[i][0] + 1), robotCoordinates[i][1]};
-                    return robotNewCoordinates;
-                }
-
+        //moves on the X axis
+        if (distanceFromX < distanceFromY) {
+            if (robotCoordinates[robotNum][0] - playerPosition[0] > 0) {
+                robotNewCoordinates[0] = (robotCoordinates[robotNum][0] - 1);
+                robotNewCoordinates[1] = robotCoordinates[robotNum][1];
             }
-            //moves on the Y axis
-            else {
-                if (robotCoordinates[i][1] - playerPosition[1] > 0) {
-                    int[] robotNewCoordinates = {robotCoordinates[i][0], (robotCoordinates[i][1] - 1)};
-                    return robotNewCoordinates;
-                }
-                if (robotCoordinates[i][1] - playerPosition[1] < 0) {
-                    int[] robotNewCoordinates = {robotCoordinates[i][0], (robotCoordinates[i][1] + 1)};
-                    return robotNewCoordinates;
-                }
+            if (robotCoordinates[robotNum][0] - playerPosition[0] < 0) {
+                robotNewCoordinates[0] = (robotCoordinates[robotNum][0] + 1);
+                robotNewCoordinates[1] = robotCoordinates[robotNum][1];
+            }
+
+        }
+        //moves on the Y axis
+        else {
+            if (robotCoordinates[robotNum][1] - playerPosition[1] > 0) {
+                robotNewCoordinates[0] = robotCoordinates[robotNum][0];
+                robotNewCoordinates[1] = (robotCoordinates[robotNum][1] - 1);
+            }
+            if (robotCoordinates[robotNum][1] - playerPosition[1] < 0) {
+                robotNewCoordinates[0] = robotCoordinates[robotNum][0];
+                robotNewCoordinates[1]= (robotCoordinates[robotNum][1] + 1);
             }
         }
+        return robotNewCoordinates;
     }
 
 
