@@ -39,21 +39,30 @@ public class Main {
 
         do {
             int[] playerCoordinates = getCharacterPosition(map, player);
-            printMap(map);
             Scanner in = new Scanner(System.in);
             char input = in.next().charAt(0);
 
             //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
             char[][] newMap = modifyMap(map, newPlayerCoordinates);
-            printMap(newMap);
-            System.out.println(Arrays.toString(newPlayerCoordinates));
-            System.out.println("playercoord UP: ");
+            /*System.out.println(Arrays.toString(newPlayerCoordinates));
+            System.out.println("playercoord UP: ");*/
             for(int x = 0; x < robotCounter; x++){
-                System.out.println(Arrays.toString(allRobotsPos[x]));
+                //System.out.println(Arrays.toString(allRobotsPos[x]));
                 int[] newRobotPosition = moveRobot(allRobotsPos, map, x);
-                System.out.println(Arrays.toString(newRobotPosition));
+                for (int xCoord = 0; xCoord < 30; xCoord++) {
+                    for (int yCoord = 0; yCoord < 50; yCoord++) {
+                        if (xCoord == newRobotPosition[0] && yCoord == newRobotPosition[1]){
+                            newMap[xCoord][yCoord] = '#';
+                        }
+                    }
+                }
+                allRobotsPos[x] = newRobotPosition;
+                //System.out.println(Arrays.toString(newRobotPosition));
             }
+            printMap(newMap);
+
+
             //Robot movement
 
 
@@ -170,7 +179,6 @@ public class Main {
 
     public static int[] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
-        char[][] currentMap = map;
         int[] playerPosition = getCharacterPosition(map, '@');
         int[] robotNewCoordinates = new int[2];
 
@@ -210,7 +218,7 @@ public class Main {
         int playerY = newPlayerCoordinates[1];
         for (int x = 0; x < 30; x++) {
             for (int y = 0; y < 50; y++) {
-                if (map[x][y] == '@') {
+                if (map[x][y] == '@' || map[x][y] == '#' ){
                     map[x][y] = ' ';
                 }
             }
