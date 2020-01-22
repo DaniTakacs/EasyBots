@@ -1,7 +1,4 @@
 package com.codecool.easybots;
-
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
@@ -10,20 +7,22 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
         boolean endOfGame = false;
         char player = '@';
         char robot = '#';
+        //Random number of Robots between 3-8
+        Random rng = new Random();
+        int numberOfRobots = rng.nextInt(5) + 3;
+        int score = 0;
 
         ArrayList<Integer[]> listOfRobots = new ArrayList<>();
 
         char[][] map = generateMap();
-
+        //Set coordinates for Robots
         map = setStartingPoint(map, player, listOfRobots);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < numberOfRobots; i++) {
             map = setStartingPoint(map, robot, listOfRobots);
         }
-
 
         //get robot coordinates from ArrayList
         int robotCounter = listOfRobots.size();
@@ -33,50 +32,48 @@ public class Main {
                 allRobotsPos[x][y] = listOfRobots.get(x)[y];
             }
         }
-        //
         printMap(map);
-        System.out.println(Arrays.toString(allRobotsPos[0]) + 1 + ".robot cord");
-        System.out.println(Arrays.toString(allRobotsPos[1]) + 2 + ".robot cord");
-        System.out.println(Arrays.toString(allRobotsPos[2]) + 3 + ".robot cord");
 
 
-        do {
+        while (!endOfGame){
             int[] playerCoordinates = getCharacterPosition(map, player);
-            System.out.println(Arrays.toString(playerCoordinates) + " player coord");
+            System.out.println(Arrays.toString(playerCoordinates) + " player coordinates");
+
             Scanner in = new Scanner(System.in);
             char input = in.next().charAt(0);
+            allRobotsPos = robotCollide(allRobotsPos, score, numberOfRobots, listOfRobots);
+
 
             //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
-            char[][] newMap = modifyMap(map, newPlayerCoordinates);
-            /*System.out.println(Arrays.toString(newPlayerCoordinates));
-            System.out.println("playercoord UP: ");*/
-            for (int x = 0; x < robotCounter; x++) {
-                //System.out.println(Arrays.toString(allRobotsPos[x]));
-                allRobotsPos = moveRobot(allRobotsPos, newMap, x);
+            //if caught, break, game over
+            if (newPlayerCoordinates[0] == 0 && newPlayerCoordinates[1] == 0){
+                System.out.println("BIG LOSER");
+                endOfGame = true;
             }
-            //System.out.println(Arrays.toString(allRobotsPos));
+
+            map = modifyMap(map, newPlayerCoordinates);
+            //move Robots
+            for (int x = 0; x < robotCounter; x++) {
+                allRobotsPos = moveRobot(allRobotsPos, map, x);
+            }
             int counter = -1;
-            while (counter < 2) {
+            while (counter < listOfRobots.size() -1 ) {
                 counter += 1;
-                System.out.println(Arrays.toString(allRobotsPos[counter]) + counter + ".robot cord");
                 for (int x = 0; x < 30; x++) {
                     for (int y = 0; y < 50; y++) {
                         if (x == allRobotsPos[counter][0] && y == allRobotsPos[counter][1]) {
-                            newMap[x][y] = '#';
+                            map[x][y] = '#';
                         }
                     }
                 }
             }
-            //System.out.println(Arrays.toString(newRobotPosition));
-            printMap(newMap);
 
-
-            //Robot movement
-
-
+            printMap(map);
+            System.out.println(numberOfRobots);
+            System.out.println(score + " <-- your score");
         }
-        while (!endOfGame);
+
     }
 
     public static char[][] generateMap() {
@@ -99,10 +96,10 @@ public class Main {
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
                 if (x > 0 && x < (rows - 1)) {
-                    map[x][0] = '|';
-                    map[x][lastColumnElement] = '|';
-                    map[lastRowElement][0] = '|';
-                    map[lastRowElement][lastColumnElement] = '|';
+                    map[x][0] = '+';
+                    map[x][lastColumnElement] = '+';
+                    map[lastRowElement][0] = '+';
+                    map[lastRowElement][lastColumnElement] = '+';
 
                 }
             }
@@ -186,8 +183,10 @@ public class Main {
         if (input == 't'){
             playerPlace =teleport(map);
         }
+        System.out.print("\033[H\033[2J");
         return playerPlace;
     }
+
 
     public static int[][] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
@@ -209,10 +208,10 @@ public class Main {
         return robotCoordinates;
     }
 
+
     private static void robotLogic(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates, int distanceFromX, int distanceFromY) {
         if (distanceFromX == 0 || distanceFromY == 0) {
             if (distanceFromX == 0 && distanceFromY == 0) {
-                System.out.println("Game over");
             } else {
                 if (distanceFromX == 0) {
                     if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
@@ -288,10 +287,32 @@ public class Main {
     }
 
 
+    public static int[][] robotCollide(int[][] allRobots, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots){
+        for (int x = 0; x < numberOfRobots - 1; x++){
+            for (int y = x+1; y < numberOfRobots; y++){
+                if (allRobots[x] == allRobots[y]){
+                    listOfRobots.remove(y);
+                    numberOfRobots -= 1;
+                    score += 100;
+                }
+            }
+        }
+        int robotCounter = listOfRobots.size();
+        int[][] allRobotsPos = new int[robotCounter][2];
+        for (int x = 0; x < robotCounter; x++) {
+            for (int y = 0; y < 2; y++) {
+                allRobotsPos[x][y] = listOfRobots.get(x)[y];
+            }
+        }
+        return allRobots;
+    }
+
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
 
 }
 
