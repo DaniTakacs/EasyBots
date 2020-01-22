@@ -34,11 +34,15 @@ public class Main {
             }
         }
         //
-
         printMap(map);
+        System.out.println(Arrays.toString(allRobotsPos[0]) + 1 + ".robot cord");
+        System.out.println(Arrays.toString(allRobotsPos[1]) + 2 + ".robot cord");
+        System.out.println(Arrays.toString(allRobotsPos[2]) + 3 + ".robot cord");
+
 
         do {
             int[] playerCoordinates = getCharacterPosition(map, player);
+            System.out.println(Arrays.toString(playerCoordinates) + " player coord");
             Scanner in = new Scanner(System.in);
             char input = in.next().charAt(0);
 
@@ -55,7 +59,7 @@ public class Main {
             int counter = -1;
             while (counter < 2) {
                 counter += 1;
-                System.out.println(Arrays.toString(allRobotsPos[counter])+ "robot cord");
+                System.out.println(Arrays.toString(allRobotsPos[counter]) + counter + ".robot cord");
                 for (int x = 0; x < 30; x++) {
                     for (int y = 0; y < 50; y++) {
                         if (x == allRobotsPos[counter][0] && y == allRobotsPos[counter][1]) {
@@ -193,35 +197,58 @@ public class Main {
         int distanceFromY = Math.abs(robotCoordinates[counter][1] - playerPosition[1]);
 
         // Checks for game over
-        if (distanceFromX == 0 && distanceFromY == 0) {
-            System.out.println("Game over");
-        }
+
 
         //moves on the X axis
-        else if (distanceFromX < distanceFromY || distanceFromY == 0) {
-
-            if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
-                robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
-                robotNewCoordinates[1] = robotCoordinates[counter][1];
-            } else {
-                robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
-                robotNewCoordinates[1] = robotCoordinates[counter][1];
-            }
-        }
-
-        //moves on the Y axis
-        else if (distanceFromX > distanceFromY || distanceFromX == 0) {
-            if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
-                robotNewCoordinates[0] = robotCoordinates[counter][0];
-                robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
-            } else {
-                robotNewCoordinates[0] = robotCoordinates[counter][0];
-                robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
-            }
-        }
+        robotLogic(robotCoordinates, playerPosition, counter, robotNewCoordinates, distanceFromX, distanceFromY);
 
         robotCoordinates[counter] = robotNewCoordinates;
         return robotCoordinates;
+    }
+
+    private static void robotLogic(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates, int distanceFromX, int distanceFromY) {
+        if (distanceFromX == 0 || distanceFromY == 0) {
+            if (distanceFromX == 0 && distanceFromY == 0) {
+                System.out.println("Game over");
+            } else {
+                if (distanceFromX == 0) {
+                    if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
+                        robotNewCoordinates[0] = robotCoordinates[counter][0];
+                        robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
+                    } else {
+                        robotNewCoordinates[0] = robotCoordinates[counter][0];
+                        robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
+                    }
+                } else {
+                    if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
+
+                        robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
+                        robotNewCoordinates[1] = robotCoordinates[counter][1];
+                    } else {
+                        robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
+                        robotNewCoordinates[1] = robotCoordinates[counter][1];
+                    }
+                }
+            }
+        } else {
+            if (distanceFromX < distanceFromY) {
+                if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
+                    robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
+                    robotNewCoordinates[1] = robotCoordinates[counter][1];
+                } else {
+                    robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
+                    robotNewCoordinates[1] = robotCoordinates[counter][1];
+                }
+            } else {
+                if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
+                    robotNewCoordinates[0] = robotCoordinates[counter][0];
+                    robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
+                } else {
+                    robotNewCoordinates[0] = robotCoordinates[counter][0];
+                    robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
+                }
+            }
+        }
     }
 
 
