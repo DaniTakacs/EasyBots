@@ -183,6 +183,9 @@ public class Main {
         if (input == 'a' && currentMap[baseX][leftY] != '|') {
             playerPlace[1] = leftY;
         }
+        if (input == 't'){
+            playerPlace =teleport(map);
+        }
         return playerPlace;
     }
 
@@ -264,6 +267,24 @@ public class Main {
         }
         map[playerX][playerY] = '@';
         return map;
+    }
+
+
+    public static int[] teleport(char[][] map){
+        int[] newPlace = new int[2];
+        Random rand = new Random();
+        int rowMax = 29;
+        int min = 1;
+        int columnMax = 49;
+        int x = rand.nextInt(rowMax) + min;
+        int y = rand.nextInt(columnMax) + min;
+        while (map[x][y] != ' ') {
+            x = rand.nextInt(rowMax) + min;
+            y = rand.nextInt(columnMax) + min;
+        }
+        newPlace[0] = x;
+        newPlace[1] = y;
+        return newPlace;
     }
 
 
