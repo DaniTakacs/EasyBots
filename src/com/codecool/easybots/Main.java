@@ -49,17 +49,22 @@ public class Main {
             System.out.println("playercoord UP: ");*/
             for(int x = 0; x < robotCounter; x++){
                 //System.out.println(Arrays.toString(allRobotsPos[x]));
-                int[] newRobotPosition = moveRobot(allRobotsPos, map, x);
-                for (int xCoord = 0; xCoord < 30; xCoord++) {
-                    for (int yCoord = 0; yCoord < 50; yCoord++) {
-                        if (xCoord == newRobotPosition[0] && yCoord == newRobotPosition[1]){
-                            newMap[xCoord][yCoord] = '#';
+                allRobotsPos = moveRobot(allRobotsPos, newMap, robotCounter);
+            }
+            //System.out.println(Arrays.toString(allRobotsPos));
+            int counter = -1;
+            while(counter < 2){
+                counter += 1;
+                System.out.println(Arrays.toString(allRobotsPos[counter]));
+                for(int x = 0; x < 30; x++) {
+                    for (int y = 0; y < 50; y++) {
+                        if (x == allRobotsPos[counter][0] && y == allRobotsPos[counter][1]) {
+                            newMap[x][y] = '#';
                         }
                     }
                 }
-                allRobotsPos[x] = newRobotPosition;
-                //System.out.println(Arrays.toString(newRobotPosition));
             }
+            //System.out.println(Arrays.toString(newRobotPosition));
             printMap(newMap);
 
 
@@ -177,39 +182,40 @@ public class Main {
         return playerPlace;
     }
 
-    public static int[] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
+    public static int[][] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
         int[] playerPosition = getCharacterPosition(map, '@');
+        int counter = robotNum - 1;
         int[] robotNewCoordinates = new int[2];
 
         // Checks the absolute x and y distance
-        int distanceFromX = Math.abs(robotCoordinates[robotNum][0] - playerPosition[0]);
-        int distanceFromY = Math.abs(robotCoordinates[robotNum][1] - playerPosition[1]);
+        int distanceFromX = Math.abs(robotCoordinates[counter][0] - playerPosition[0]);
+        int distanceFromY = Math.abs(robotCoordinates[counter][1] - playerPosition[1]);
+
 
         //moves on the X axis
         if (distanceFromX < distanceFromY) {
-            if (robotCoordinates[robotNum][0] - playerPosition[0] > 0) {
-                robotNewCoordinates[0] = (robotCoordinates[robotNum][0] - 1);
-                robotNewCoordinates[1] = robotCoordinates[robotNum][1];
+            if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
+                robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
             }
-            if (robotCoordinates[robotNum][0] - playerPosition[0] < 0) {
-                robotNewCoordinates[0] = (robotCoordinates[robotNum][0] + 1);
-                robotNewCoordinates[1] = robotCoordinates[robotNum][1];
+            else  {
+                robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
+                robotNewCoordinates[1] = robotCoordinates[counter][1];
             }
-
         }
         //moves on the Y axis
         else {
-            if (robotCoordinates[robotNum][1] - playerPosition[1] > 0) {
-                robotNewCoordinates[0] = robotCoordinates[robotNum][0];
-                robotNewCoordinates[1] = (robotCoordinates[robotNum][1] - 1);
+            if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
+                robotNewCoordinates[0] = robotCoordinates[counter][0];
+                robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
             }
-            if (robotCoordinates[robotNum][1] - playerPosition[1] < 0) {
-                robotNewCoordinates[0] = robotCoordinates[robotNum][0];
-                robotNewCoordinates[1]= (robotCoordinates[robotNum][1] + 1);
+            else  {
+                robotNewCoordinates[0] = robotCoordinates[counter][0];
+                robotNewCoordinates[1]= (robotCoordinates[counter][1] + 1);
             }
         }
-        return robotNewCoordinates;
+        robotCoordinates[counter] = robotNewCoordinates;
+        return robotCoordinates;
     }
 
 
@@ -218,7 +224,7 @@ public class Main {
         int playerY = newPlayerCoordinates[1];
         for (int x = 0; x < 30; x++) {
             for (int y = 0; y < 50; y++) {
-                if (map[x][y] == '@' || map[x][y] == '#' ){
+                if (map[x][y] == '@' || map[x][y] == '#'){
                     map[x][y] = ' ';
                 }
             }
