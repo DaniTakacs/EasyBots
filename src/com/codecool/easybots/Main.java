@@ -47,16 +47,16 @@ public class Main {
             char[][] newMap = modifyMap(map, newPlayerCoordinates);
             /*System.out.println(Arrays.toString(newPlayerCoordinates));
             System.out.println("playercoord UP: ");*/
-            for(int x = 0; x < robotCounter; x++){
+            for (int x = 0; x < robotCounter; x++) {
                 //System.out.println(Arrays.toString(allRobotsPos[x]));
-                allRobotsPos = moveRobot(allRobotsPos, newMap, robotCounter);
+                allRobotsPos = moveRobot(allRobotsPos, newMap, x);
             }
             //System.out.println(Arrays.toString(allRobotsPos));
             int counter = -1;
-            while(counter < 2){
+            while (counter < 2) {
                 counter += 1;
-                System.out.println(Arrays.toString(allRobotsPos[counter]));
-                for(int x = 0; x < 30; x++) {
+                System.out.println(Arrays.toString(allRobotsPos[counter])+ "robot cord");
+                for (int x = 0; x < 30; x++) {
                     for (int y = 0; y < 50; y++) {
                         if (x == allRobotsPos[counter][0] && y == allRobotsPos[counter][1]) {
                             newMap[x][y] = '#';
@@ -185,35 +185,41 @@ public class Main {
     public static int[][] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
         int[] playerPosition = getCharacterPosition(map, '@');
-        int counter = robotNum - 1;
+        int counter = robotNum;
         int[] robotNewCoordinates = new int[2];
 
         // Checks the absolute x and y distance
         int distanceFromX = Math.abs(robotCoordinates[counter][0] - playerPosition[0]);
         int distanceFromY = Math.abs(robotCoordinates[counter][1] - playerPosition[1]);
 
+        // Checks for game over
+        if (distanceFromX == 0 && distanceFromY == 0) {
+            System.out.println("Game over");
+        }
 
         //moves on the X axis
-        if (distanceFromX < distanceFromY) {
+        else if (distanceFromX < distanceFromY || distanceFromY == 0) {
+
             if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
                 robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
-            }
-            else  {
+                robotNewCoordinates[1] = robotCoordinates[counter][1];
+            } else {
                 robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
                 robotNewCoordinates[1] = robotCoordinates[counter][1];
             }
         }
+
         //moves on the Y axis
-        else {
+        else if (distanceFromX > distanceFromY || distanceFromX == 0) {
             if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
                 robotNewCoordinates[0] = robotCoordinates[counter][0];
                 robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
-            }
-            else  {
+            } else {
                 robotNewCoordinates[0] = robotCoordinates[counter][0];
-                robotNewCoordinates[1]= (robotCoordinates[counter][1] + 1);
+                robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
             }
         }
+
         robotCoordinates[counter] = robotNewCoordinates;
         return robotCoordinates;
     }
@@ -224,7 +230,7 @@ public class Main {
         int playerY = newPlayerCoordinates[1];
         for (int x = 0; x < 30; x++) {
             for (int y = 0; y < 50; y++) {
-                if (map[x][y] == '@' || map[x][y] == '#'){
+                if (map[x][y] == '@' || map[x][y] == '#') {
                     map[x][y] = ' ';
                 }
             }
