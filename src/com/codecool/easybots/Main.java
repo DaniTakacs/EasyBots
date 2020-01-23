@@ -22,6 +22,7 @@ public class Main {
 
         char[][] map = generateMap();
 
+
         //Set coordinates for Robots
         map = setStartingPoint(map, player, listOfRobots);
         for (int i = 0; i < numberOfRobots; i++) {
@@ -37,14 +38,29 @@ public class Main {
             }
         }
 
-        printMap(map);
-//
-//        for (int i = 0; i < allRobotsPos.length; i++) {
-//            System.out.println(("Robot " + (i + 1) + " moves to " + allRobotsPos[i][0] + ", " + allRobotsPos[i][1] + "."));
-//
-//        }
 
-        // Game loop
+        startGame(endOfGame, player, score, numberOfRobots, listOfRobots, map, robotCounter, allRobotsPos);
+
+
+    }
+
+    private static void startGame(boolean endOfGame, char player, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots, char[][] map, int robotCounter, int[][] allRobotsPos) {
+        printStartMenu();
+        Scanner scanner = new Scanner(System.in);
+        char startChar = scanner.next().charAt(0);
+
+        if (startChar == 's') {
+            clearScreen();
+            printMap(map);
+            gameLoop(endOfGame, player, score, numberOfRobots, listOfRobots, map, robotCounter, allRobotsPos);
+        } else {
+            clearScreen();
+            startGame(endOfGame, player, score, numberOfRobots, listOfRobots, map, robotCounter, allRobotsPos);
+
+        }
+    }
+
+    public static void gameLoop(boolean endOfGame, char player, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots, char[][] map, int robotCounter, int[][] allRobotsPos) {
         while (!endOfGame) {
             int[] playerCoordinates = getCharacterPosition(map, player);
 
@@ -52,6 +68,7 @@ public class Main {
             Scanner in = new Scanner(System.in);
 
             System.out.println('\n' + "  w" + "\n" + "a s d   or t for teleport (usable every 3 turns)" + "\n");
+            System.out.println(" @ <-- Your character" + "\n" + " # <-- Enemy robots" + "\n");
             if (turn >= 3) {
                 System.out.println("You can use teleport! (t) ");
             } else {
@@ -87,11 +104,10 @@ public class Main {
                     }
                 }
             }
-
+            clearScreen();
             printMap(map);
             System.out.println(score + " <-- your score");
         }
-
     }
 
     public static char[][] generateMap() {
@@ -173,6 +189,11 @@ public class Main {
             System.out.println(strBuilder.append(map[y]));
 
         }
+    }
+
+    public static void printStartMenu() {
+        System.out.println("𝘞𝘦𝘭𝘤𝘰𝘮𝘦 𝘵𝘰 𝘵𝘩𝘦 𝘙𝘖𝘉𝘖𝘛𝘚 © 𝘨𝘢𝘮𝘦!" + "\n" + "Press (s) to start.");
+
     }
 
 
@@ -312,7 +333,6 @@ public class Main {
         for (int x = 0; x < numberOfRobots - 1; x++) {
             for (int y = x + 1; y < numberOfRobots; y++) {
                 if (Arrays.equals(allRobots[x], allRobots[y])) {
-                    System.out.println("SCORE + 100");
                     score += 100;
                 }
             }
