@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0e8fa81e-39f7-4a71-89ac-c2448c0329cc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/easybots/com/codecool/easybots/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/easybots/com/codecool/easybots/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/codecool/easybots/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/codecool/easybots/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/codecool/easybots/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/codecool/easybots/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/codecool/easybots/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="193" column="34" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
+            <state relative-caret-position="495">
+              <caret line="57" column="88" selection-start-line="57" selection-start-column="88" selection-end-line="57" selection-end-column="88" />
               <folding>
                 <element signature="method#generateMap#0;class#Main#0" />
                 <element signature="method#setStartingPoint#0;class#Main#0" />
@@ -105,7 +103,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1579779318294" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1579779780715" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -163,7 +161,7 @@
       <option name="presentableId" value="Default" />
       <updated>1579515748047</updated>
       <workItem from="1579527910895" duration="416000" />
-      <workItem from="1579763226187" duration="10265000" />
+      <workItem from="1579763226187" duration="10695000" />
     </task>
     <task id="LOCAL-00001" summary="Turn counter added, UX prints modified">
       <created>1579773637912</created>
@@ -186,15 +184,21 @@
       <option name="project" value="LOCAL" />
       <updated>1579779039939</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Teleport working properly">
+      <created>1579779361896</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1579779361896</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12187000" />
+    <option name="totallyTimeSpent" value="12617000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="1" />
@@ -234,7 +238,8 @@
     <MESSAGE value="Turn counter added, UX prints modified" />
     <MESSAGE value="Merge branch 'master' of https://github.com/DaniTakacs/EasyBots&#10;&#10;# Conflicts:&#10;#&#9;src/com/codecool/easybots/Main.class&#10;#&#9;src/com/codecool/easybots/Main.java" />
     <MESSAGE value="Removed code clutter&#10;Teleport working as intended (every 3 turns only)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed code clutter&#10;Teleport working as intended (every 3 turns only)" />
+    <MESSAGE value="Teleport working properly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Teleport working properly" />
   </component>
   <component name="WindowStateProjectService">
     <state x="588" y="214" width="800" height="677" key="#Project_Structure" timestamp="1579515939757">
@@ -288,8 +293,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/codecool/easybots/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="193" column="34" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
+        <state relative-caret-position="495">
+          <caret line="57" column="88" selection-start-line="57" selection-start-column="88" selection-end-line="57" selection-end-column="88" />
           <folding>
             <element signature="method#generateMap#0;class#Main#0" />
             <element signature="method#setStartingPoint#0;class#Main#0" />

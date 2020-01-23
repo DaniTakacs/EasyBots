@@ -38,20 +38,27 @@ public class Main {
         }
 
         printMap(map);
-
-        for (int i = 0; i < allRobotsPos.length; i++) {
-            System.out.println(("Robot " + (i + 1) + " moves to " + allRobotsPos[i][0] + ", " + allRobotsPos[i][1] + "."));
-
-        }
+//
+//        for (int i = 0; i < allRobotsPos.length; i++) {
+//            System.out.println(("Robot " + (i + 1) + " moves to " + allRobotsPos[i][0] + ", " + allRobotsPos[i][1] + "."));
+//
+//        }
 
         // Game loop
         while (!endOfGame) {
             int[] playerCoordinates = getCharacterPosition(map, player);
 
-            System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "." + "\n");
+//            System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "." + "\n");
             Scanner in = new Scanner(System.in);
-            System.out.println("Turn " + turn);
-            System.out.println("  w" + "\n" + "a s d    or t for teleport (usable every 3 turns)" + "\n" + "\n" + "Your turn to move!");
+
+            System.out.println('\n' + "  w" + "\n" + "a s d   or t for teleport (usable every 3 turns)" + "\n");
+            if (turn >= 3) {
+                System.out.println("You can use teleport! (t) ");
+            } else {
+                System.out.println("You can teleport in " + (3 - turn) + " turns." + "\n");
+            }
+            System.out.println("Your turn to move!");
+
             char input = in.next().charAt(0);
             score = robotCollide(allRobotsPos, score, numberOfRobots);
 
@@ -191,7 +198,7 @@ public class Main {
         if (input == 'a' && currentMap[baseX][leftY] != '+') {
             playerPlace[1] = leftY;
         }
-        if (input == 't' && turn >= 3 ) {
+        if (input == 't' && turn >= 3) {
             playerPlace = teleport(map);
             turn = 0;
         }
