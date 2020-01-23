@@ -258,47 +258,49 @@ public class Main {
 
 
     private static void robotLogic(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates, int distanceFromX, int distanceFromY) {
-        boolean isOnPlayer = distanceFromX == 0 || distanceFromY == 0;
-        if (isOnPlayer) {
-            if (distanceFromX == 0 && distanceFromY == 0) {
-            } else {
-                if (distanceFromX == 0) {
-                    if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
-                        robotNewCoordinates[0] = robotCoordinates[counter][0];
-                        robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
-                    } else {
-                        robotNewCoordinates[0] = robotCoordinates[counter][0];
-                        robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
-                    }
-                } else {
-                    if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
+        boolean sameRowAsPlayer = distanceFromX == 0;
+        boolean sameColumnAsPlayer = distanceFromY == 0;
+        boolean matchPlayerAxis = sameRowAsPlayer || sameColumnAsPlayer;
+        boolean rowIsCloser = distanceFromX < distanceFromY;
 
-                        robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
-                        robotNewCoordinates[1] = robotCoordinates[counter][1];
-                    } else {
-                        robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
-                        robotNewCoordinates[1] = robotCoordinates[counter][1];
-                    }
+        if (matchPlayerAxis) {
+            if (sameRowAsPlayer && sameColumnAsPlayer) {
+                gameOver();
+            }
+            else {
+                if (sameRowAsPlayer) {
+                    changeColumn(robotCoordinates, playerPosition, counter, robotNewCoordinates);
+                } else {
+                    changeRow(robotCoordinates, playerPosition, counter, robotNewCoordinates);
                 }
             }
         } else {
-            if (distanceFromX < distanceFromY) {
-                if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
-                    robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
-                    robotNewCoordinates[1] = robotCoordinates[counter][1];
-                } else {
-                    robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
-                    robotNewCoordinates[1] = robotCoordinates[counter][1];
-                }
+            if (rowIsCloser) {
+                changeRow(robotCoordinates, playerPosition, counter, robotNewCoordinates);
             } else {
-                if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
-                    robotNewCoordinates[0] = robotCoordinates[counter][0];
-                    robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
-                } else {
-                    robotNewCoordinates[0] = robotCoordinates[counter][0];
-                    robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
-                }
+                changeColumn(robotCoordinates, playerPosition, counter, robotNewCoordinates);
             }
+        }
+    }
+
+    private static void changeRow(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates) {
+        if (robotCoordinates[counter][0] - playerPosition[0] > 0) {
+
+            robotNewCoordinates[0] = (robotCoordinates[counter][0] - 1);
+            robotNewCoordinates[1] = robotCoordinates[counter][1];
+        } else {
+            robotNewCoordinates[0] = (robotCoordinates[counter][0] + 1);
+            robotNewCoordinates[1] = robotCoordinates[counter][1];
+        }
+    }
+
+    private static void changeColumn(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates) {
+        if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
+            robotNewCoordinates[0] = robotCoordinates[counter][0];
+            robotNewCoordinates[1] = (robotCoordinates[counter][1] - 1);
+        } else {
+            robotNewCoordinates[0] = robotCoordinates[counter][0];
+            robotNewCoordinates[1] = (robotCoordinates[counter][1] + 1);
         }
     }
 
@@ -360,7 +362,9 @@ public class Main {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+    public static void gameOver(){
 
+    }
 
 }
 
