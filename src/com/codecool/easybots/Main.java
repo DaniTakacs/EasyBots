@@ -18,7 +18,7 @@ public class Main {
         char player = '@';
         char robot = '#';
         int score = 0;
-        int numberOfRobots = rng.nextInt(50) + 3; //Random number of Robots between 3-8
+        int numberOfRobots = rng.nextInt(40) + 100; //Random number of Robots between 3-8
         ArrayList<Integer[]> listOfRobots = new ArrayList<>();
 
         char[][] map = generateMap();
@@ -86,10 +86,17 @@ public class Main {
 
             //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
+            int[] lose = {0, 0};
             turn++;
             //if caught, break, game over
-            if (newPlayerCoordinates[0] == 0 || newPlayerCoordinates[1] == 0) {
-                System.out.println("BIG LOSER");
+            if (Arrays.equals(newPlayerCoordinates, lose)) {
+                System.out.println("It's over for you, try next time! :)");
+                System.out.println(" ___________");
+                System.out.println("|  --  --  |");
+                System.out.println("|    ||    |");
+                System.out.println("|  ______  |");
+                System.out.println("|__________|");
+                System.exit(0);
                 endOfGame = true;
             }
 
@@ -119,6 +126,7 @@ public class Main {
             clearScreen();
             printMap(map);
         }
+        System.out.println("Your game is over :(  ");
     }
 
     public static char[][] generateMap() {
@@ -243,6 +251,10 @@ public class Main {
     public static int[][] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
         int[] playerPosition = getCharacterPosition(map, '@');
+        if(playerPosition[0] == 0 && playerPosition[1] == 0){
+            System.out.println("Your game is over, try next time! :)");
+            System.exit(0);
+        }
         int counter = robotNum;
         int[] robotNewCoordinates = new int[2];
 
