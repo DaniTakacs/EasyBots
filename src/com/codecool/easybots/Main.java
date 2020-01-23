@@ -14,6 +14,7 @@ public class Main {
         boolean endOfGame = false;
         char player = '@';
         char robot = '#';
+        int turn = 0;
 
         ArrayList<Integer[]> listOfRobots = new ArrayList<>();
 
@@ -35,19 +36,22 @@ public class Main {
         }
         //
         printMap(map);
-        System.out.println(Arrays.toString(allRobotsPos[0]) + 1 + ".robot cord");
-        System.out.println(Arrays.toString(allRobotsPos[1]) + 2 + ".robot cord");
-        System.out.println(Arrays.toString(allRobotsPos[2]) + 3 + ".robot cord");
+
+        for (int i = 0; i < allRobotsPos.length; i++) {
+            System.out.println(( "Robot " + (i + 1) + " moves to " + allRobotsPos[i][0] + ", " + allRobotsPos[i][1] + "."));
+
+        }
 
 
         do {
             int[] playerCoordinates = getCharacterPosition(map, player);
-            System.out.println(Arrays.toString(playerCoordinates) + " player coord");
+            System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "\n");
             Scanner in = new Scanner(System.in);
+            System.out.println("  w"+ "\n" + "a s d    or t for teleport (usable every 3 turns)"+ "\n" + "\n" + "Your turn to move!");
             char input = in.next().charAt(0);
 
             //Player movement
-            int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
+            int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map, turn);
             char[][] newMap = modifyMap(map, newPlayerCoordinates);
             /*System.out.println(Arrays.toString(newPlayerCoordinates));
             System.out.println("playercoord UP: ");*/
@@ -161,7 +165,7 @@ public class Main {
     }
 
 
-    public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map) {
+    public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map, int turn) {
         int baseX = playerCoordinates[0];
         int baseY = playerCoordinates[1];
         int[] playerPlace = {baseX, baseY};
@@ -183,8 +187,8 @@ public class Main {
         if (input == 'a' && currentMap[baseX][leftY] != '|') {
             playerPlace[1] = leftY;
         }
-        if (input == 't'){
-            playerPlace =teleport(map);
+        if (input == 't' && turn % 3 == 0) {
+            playerPlace = teleport(map);
         }
         return playerPlace;
     }
