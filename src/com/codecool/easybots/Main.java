@@ -10,21 +10,23 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
         boolean endOfGame = false;
         char player = '@';
         char robot = '#';
         int turn = 0;
+        //Random number of Robots between 3-8
+        Random rng = new Random();
+        int numberOfRobots = rng.nextInt(50) + 3;
+        int score = 0;
 
         ArrayList<Integer[]> listOfRobots = new ArrayList<>();
 
         char[][] map = generateMap();
-
+        //Set coordinates for Robots
         map = setStartingPoint(map, player, listOfRobots);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < numberOfRobots; i++) {
             map = setStartingPoint(map, robot, listOfRobots);
         }
-
 
         //get robot coordinates from ArrayList
         int robotCounter = listOfRobots.size();
@@ -43,44 +45,49 @@ public class Main {
         }
 
 
-        do {
+        while (!endOfGame){
             int[] playerCoordinates = getCharacterPosition(map, player);
+            System.out.println(Arrays.toString(playerCoordinates) + " player coordinates");
+
             System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "\n");
             Scanner in = new Scanner(System.in);
             System.out.println("  w"+ "\n" + "a s d    or t for teleport (usable every 3 turns)"+ "\n" + "\n" + "Your turn to move!");
             char input = in.next().charAt(0);
+            score = robotCollide(allRobotsPos,score,numberOfRobots);
 
             //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map, turn);
-            char[][] newMap = modifyMap(map, newPlayerCoordinates);
-            /*System.out.println(Arrays.toString(newPlayerCoordinates));
-            System.out.println("playercoord UP: ");*/
-            for (int x = 0; x < robotCounter; x++) {
-                //System.out.println(Arrays.toString(allRobotsPos[x]));
-                allRobotsPos = moveRobot(allRobotsPos, newMap, x);
+            //if caught, break, game over
+            if (newPlayerCoordinates[0] == 0 && newPlayerCoordinates[1] == 0){
+                System.out.println("BIG LOSER");
+                endOfGame = true;
             }
-            //System.out.println(Arrays.toString(allRobotsPos));
+
+            map = modifyMap(map, newPlayerCoordinates);
+            //move Robots
+            for (int x = 0; x < robotCounter; x++) {
+                allRobotsPos = moveRobot(allRobotsPos, map, x);
+            }
             int counter = -1;
-            while (counter < 2) {
+            while (counter < listOfRobots.size() -1 ) {
                 counter += 1;
-                System.out.println(Arrays.toString(allRobotsPos[counter]) + counter + ".robot cord");
                 for (int x = 0; x < 30; x++) {
                     for (int y = 0; y < 50; y++) {
                         if (x == allRobotsPos[counter][0] && y == allRobotsPos[counter][1]) {
-                            newMap[x][y] = '#';
+                            map[x][y] = '#';
                         }
                     }
                 }
             }
-            //System.out.println(Arrays.toString(newRobotPosition));
-            printMap(newMap);
 
-
-            //Robot movement
-
-
+            printMap(map);
+            System.out.println(numberOfRobots);
+            System.out.println(score + " <-- your score");
+            /*for(int x = 0; x < numberOfRobots; x++){
+                System.out.println(Arrays.toString(allRobotsPos[x]));
+            }*/
         }
-        while (!endOfGame);
+
     }
 
     public static char[][] generateMap() {
@@ -103,10 +110,10 @@ public class Main {
         for (int x = 0; x < rows; x++) {
             for (int y = 0; y < columns; y++) {
                 if (x > 0 && x < (rows - 1)) {
-                    map[x][0] = '|';
-                    map[x][lastColumnElement] = '|';
-                    map[lastRowElement][0] = '|';
-                    map[lastRowElement][lastColumnElement] = '|';
+                    map[x][0] = '+';
+                    map[x][lastColumnElement] = '+';
+                    map[lastRowElement][0] = '+';
+                    map[lastRowElement][lastColumnElement] = '+';
 
                 }
             }
@@ -181,17 +188,19 @@ public class Main {
         if (input == 's' && currentMap[downX][baseY] != '_') {
             playerPlace[0] = downX;
         }
-        if (input == 'd' && currentMap[baseX][rightY] != '|') {
+        if (input == 'd' && currentMap[baseX][rightY] != '+') {
             playerPlace[1] = rightY;
         }
-        if (input == 'a' && currentMap[baseX][leftY] != '|') {
+        if (input == 'a' && currentMap[baseX][leftY] != '+') {
             playerPlace[1] = leftY;
         }
         if (input == 't' && turn % 3 == 0) {
             playerPlace = teleport(map);
         }
+        System.out.print("\033[H\033[2J");
         return playerPlace;
     }
+
 
     public static int[][] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
@@ -213,10 +222,10 @@ public class Main {
         return robotCoordinates;
     }
 
+
     private static void robotLogic(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates, int distanceFromX, int distanceFromY) {
         if (distanceFromX == 0 || distanceFromY == 0) {
             if (distanceFromX == 0 && distanceFromY == 0) {
-                System.out.println("Game over");
             } else {
                 if (distanceFromX == 0) {
                     if (robotCoordinates[counter][1] - playerPosition[1] > 0) {
@@ -292,10 +301,26 @@ public class Main {
     }
 
 
+    public static int robotCollide(int[][] allRobots, int score, int numberOfRobots){
+
+
+        for (int x = 0; x < numberOfRobots - 1; x++){
+            for (int y = x+1; y < numberOfRobots; y++){
+                if (Arrays.equals(allRobots[x], allRobots[y])){
+                    System.out.println("SCORE + 100");
+                    score += 100;
+                }
+            }
+        }
+        return score;
+    }
+
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
 
 }
 
