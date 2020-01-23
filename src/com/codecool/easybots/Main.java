@@ -12,7 +12,7 @@ public class Main {
         char robot = '#';
         //Random number of Robots between 3-8
         Random rng = new Random();
-        int numberOfRobots = rng.nextInt(5) + 3;
+        int numberOfRobots = rng.nextInt(50) + 3;
         int score = 0;
 
         ArrayList<Integer[]> listOfRobots = new ArrayList<>();
@@ -41,8 +41,7 @@ public class Main {
 
             Scanner in = new Scanner(System.in);
             char input = in.next().charAt(0);
-            allRobotsPos = robotCollide(allRobotsPos, score, numberOfRobots, listOfRobots);
-
+            score = robotCollide(allRobotsPos,score,numberOfRobots);
 
             //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
@@ -72,6 +71,9 @@ public class Main {
             printMap(map);
             System.out.println(numberOfRobots);
             System.out.println(score + " <-- your score");
+            /*for(int x = 0; x < numberOfRobots; x++){
+                System.out.println(Arrays.toString(allRobotsPos[x]));
+            }*/
         }
 
     }
@@ -174,10 +176,10 @@ public class Main {
         if (input == 's' && currentMap[downX][baseY] != '_') {
             playerPlace[0] = downX;
         }
-        if (input == 'd' && currentMap[baseX][rightY] != '|') {
+        if (input == 'd' && currentMap[baseX][rightY] != '+') {
             playerPlace[1] = rightY;
         }
-        if (input == 'a' && currentMap[baseX][leftY] != '|') {
+        if (input == 'a' && currentMap[baseX][leftY] != '+') {
             playerPlace[1] = leftY;
         }
         if (input == 't'){
@@ -287,24 +289,18 @@ public class Main {
     }
 
 
-    public static int[][] robotCollide(int[][] allRobots, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots){
+    public static int robotCollide(int[][] allRobots, int score, int numberOfRobots){
+
+
         for (int x = 0; x < numberOfRobots - 1; x++){
             for (int y = x+1; y < numberOfRobots; y++){
-                if (allRobots[x] == allRobots[y]){
-                    listOfRobots.remove(y);
-                    numberOfRobots -= 1;
+                if (Arrays.equals(allRobots[x], allRobots[y])){
+                    System.out.println("SCORE + 100");
                     score += 100;
                 }
             }
         }
-        int robotCounter = listOfRobots.size();
-        int[][] allRobotsPos = new int[robotCounter][2];
-        for (int x = 0; x < robotCounter; x++) {
-            for (int y = 0; y < 2; y++) {
-                allRobotsPos[x][y] = listOfRobots.get(x)[y];
-            }
-        }
-        return allRobots;
+        return score;
     }
 
 
