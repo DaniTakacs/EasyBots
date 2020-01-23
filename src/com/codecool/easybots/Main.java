@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Main {
 
     static int turn = 3;
+    static boolean teleported = false;
 
     public static void main(String[] args) {
         Random rng = new Random();
@@ -62,7 +63,7 @@ public class Main {
     public static void gameLoop(boolean endOfGame, char player, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots, char[][] map, int robotCounter, int[][] allRobotsPos) {
         while (!endOfGame) {
             int[] playerCoordinates = getCharacterPosition(map, player);
-
+            teleported = false;
             robotCounter = listOfRobots.size();
             System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "." + "\n");
 
@@ -94,8 +95,10 @@ public class Main {
 
             map = modifyMap(map, newPlayerCoordinates);
             //move Robots
-            for (int x = 0; x < robotCounter; x++) {
-                allRobotsPos = moveRobot(allRobotsPos, map, x);
+            if(!teleported){
+                for (int x = 0; x < robotCounter; x++) {
+                    allRobotsPos = moveRobot(allRobotsPos, map, x);
+                }
             }
             int counter = -1;
             while (counter < listOfRobots.size() - 1) {
@@ -229,6 +232,7 @@ public class Main {
         }
         if (input == 't' && turn >= 3) {
             playerPlace = teleport(map);
+            teleported = true;
             turn = 0;
         }
         System.out.print("\033[H\033[2J");
