@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0e8fa81e-39f7-4a71-89ac-c2448c0329cc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/easybots/com/codecool/easybots/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/easybots/com/codecool/easybots/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/codecool/easybots/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/codecool/easybots/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/codecool/easybots/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/codecool/easybots/Main.java" afterDir="false" />
     </list>
@@ -19,14 +18,33 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/codecool/easybots/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="193" column="34" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
+            <state relative-caret-position="433">
+              <caret line="55" column="113" selection-start-line="55" selection-start-column="113" selection-end-line="55" selection-end-column="113" />
               <folding>
+                <element signature="e#766#839#1" />
+                <element signature="method#gameLoop#0;class#Main#0" />
                 <element signature="method#generateMap#0;class#Main#0" />
                 <element signature="method#setStartingPoint#0;class#Main#0" />
                 <element signature="method#getCharacterPosition#0;class#Main#0" />
                 <element signature="method#printMap#0;class#Main#0" />
+                <element signature="method#printStartMenu#0;class#Main#0" />
+                <element signature="method#movePlayer#0;class#Main#0" />
+                <element signature="method#moveRobot#0;class#Main#0" />
+                <element signature="method#robotLogic#0;class#Main#0" />
+                <element signature="method#modifyMap#0;class#Main#0" />
+                <element signature="method#teleport#0;class#Main#0" />
+                <element signature="method#robotCollide#0;class#Main#0" />
+                <element signature="method#clearScreen#0;class#Main#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/Scanner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="936" selection-start-line="936" selection-end-line="936" />
             </state>
           </provider>
         </entry>
@@ -43,6 +61,8 @@
       <find>player</find>
       <find>movePlayer</find>
       <find>printMap</find>
+      <find>input</find>
+      <find>SCORE</find>
     </findStrings>
     <replaceStrings>
       <replace>robot</replace>
@@ -105,7 +125,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1579779318294" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1579783772836" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -163,7 +184,7 @@
       <option name="presentableId" value="Default" />
       <updated>1579515748047</updated>
       <workItem from="1579527910895" duration="416000" />
-      <workItem from="1579763226187" duration="10265000" />
+      <workItem from="1579763226187" duration="13569000" />
     </task>
     <task id="LOCAL-00001" summary="Turn counter added, UX prints modified">
       <created>1579773637912</created>
@@ -186,15 +207,28 @@
       <option name="project" value="LOCAL" />
       <updated>1579779039939</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Teleport working properly">
+      <created>1579779361896</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1579779361896</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Game UI and print fixes">
+      <created>1579779852023</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1579779852023</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12187000" />
+    <option name="totallyTimeSpent" value="15491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="1" />
@@ -215,7 +249,7 @@
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.3291536" />
       <window_info anchor="bottom" id="Debug" order="11" weight="0.20480669" />
-      <window_info active="true" anchor="bottom" id="Run" order="12" visible="true" weight="0.22675025" />
+      <window_info active="true" anchor="bottom" id="Run" order="12" visible="true" weight="0.21316615" />
       <window_info anchor="right" id="Palette" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Maven" order="2" />
@@ -234,7 +268,9 @@
     <MESSAGE value="Turn counter added, UX prints modified" />
     <MESSAGE value="Merge branch 'master' of https://github.com/DaniTakacs/EasyBots&#10;&#10;# Conflicts:&#10;#&#9;src/com/codecool/easybots/Main.class&#10;#&#9;src/com/codecool/easybots/Main.java" />
     <MESSAGE value="Removed code clutter&#10;Teleport working as intended (every 3 turns only)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed code clutter&#10;Teleport working as intended (every 3 turns only)" />
+    <MESSAGE value="Teleport working properly" />
+    <MESSAGE value="Game UI and print fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game UI and print fixes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="588" y="214" width="800" height="677" key="#Project_Structure" timestamp="1579515939757">
@@ -286,15 +322,32 @@
     <entry file="file://$PROJECT_DIR$/src/com/codecool/easybots/Main.class">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="jar:///usr/lib/jvm/jdk-11/lib/src.zip!/java.base/java/util/Scanner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="936" selection-start-line="936" selection-end-line="936" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/codecool/easybots/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="193" column="34" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
+        <state relative-caret-position="433">
+          <caret line="55" column="113" selection-start-line="55" selection-start-column="113" selection-end-line="55" selection-end-column="113" />
           <folding>
+            <element signature="e#766#839#1" />
+            <element signature="method#gameLoop#0;class#Main#0" />
             <element signature="method#generateMap#0;class#Main#0" />
             <element signature="method#setStartingPoint#0;class#Main#0" />
             <element signature="method#getCharacterPosition#0;class#Main#0" />
             <element signature="method#printMap#0;class#Main#0" />
+            <element signature="method#printStartMenu#0;class#Main#0" />
+            <element signature="method#movePlayer#0;class#Main#0" />
+            <element signature="method#moveRobot#0;class#Main#0" />
+            <element signature="method#robotLogic#0;class#Main#0" />
+            <element signature="method#modifyMap#0;class#Main#0" />
+            <element signature="method#teleport#0;class#Main#0" />
+            <element signature="method#robotCollide#0;class#Main#0" />
+            <element signature="method#clearScreen#0;class#Main#0" />
           </folding>
         </state>
       </provider>

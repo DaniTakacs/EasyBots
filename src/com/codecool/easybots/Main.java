@@ -22,6 +22,7 @@ public class Main {
 
         char[][] map = generateMap();
 
+
         //Set coordinates for Robots
         map = setStartingPoint(map, player, listOfRobots);
         for (int i = 0; i < numberOfRobots; i++) {
@@ -36,22 +37,49 @@ public class Main {
                 allRobotsPos[x][y] = listOfRobots.get(x)[y];
             }
         }
+        startGame(endOfGame, player, score, numberOfRobots, listOfRobots, map, robotCounter, allRobotsPos);
 
-        printMap(map);
 
-        /*for (int i = 0; i < allRobotsPos.length; i++) {
-            System.out.println(("Robot " + (i + 1) + " moves to " + allRobotsPos[i][0] + ", " + allRobotsPos[i][1] + "."));
+    }
 
-        }*/
+    private static void startGame(boolean endOfGame, char player, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots, char[][] map, int robotCounter, int[][] allRobotsPos) {
+        printStartMenu();
+        Scanner scanner = new Scanner(System.in);
+        char startChar = scanner.next().charAt(0);
 
-        // Game loop
+        if (startChar == 's') {
+            clearScreen();
+            printMap(map);
+            gameLoop(endOfGame, player, score, numberOfRobots, listOfRobots, map, robotCounter, allRobotsPos);
+        } else {
+            clearScreen();
+            startGame(endOfGame, player, score, numberOfRobots, listOfRobots, map, robotCounter, allRobotsPos);
+
+        }
+    }
+
+
+    public static void gameLoop(boolean endOfGame, char player, int score, int numberOfRobots, ArrayList<Integer[]> listOfRobots, char[][] map, int robotCounter, int[][] allRobotsPos) {
         while (!endOfGame) {
             int[] playerCoordinates = getCharacterPosition(map, player);
+
             robotCounter = listOfRobots.size();
             System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "." + "\n");
+
+
+
             Scanner in = new Scanner(System.in);
-            System.out.println("Turn " + turn);
-            System.out.println("  w" + "\n" + "a s d    or t for teleport (usable every 3 turns)" + "\n" + "\n" + "Your turn to move!");
+
+            System.out.println('\n' + "  w" + "\n" + "a s d   or t for teleport (usable every 3 turns)" + "\n");
+            System.out.println(" @ <-- Your character" + "\n" + " # <-- Enemy robots" + "\n");
+            System.out.println("Your score: "+ score + "\n" );
+            if (turn >= 3) {
+                System.out.println("You can use teleport! (t) ");
+            } else {
+                System.out.println("You can teleport in " + (3 - turn) + " turns." + "\n");
+            }
+            System.out.println("Your turn to move!");
+
             char input = in.next().charAt(0);
 
 
@@ -59,7 +87,7 @@ public class Main {
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
             turn++;
             //if caught, break, game over
-            if (newPlayerCoordinates[0] == 0 && newPlayerCoordinates[1] == 0) {
+            if (newPlayerCoordinates[0] == 0 || newPlayerCoordinates[1] == 0) {
                 System.out.println("BIG LOSER");
                 endOfGame = true;
             }
@@ -80,14 +108,14 @@ public class Main {
                     }
                 }
             }
-            score = robotCollide(allRobotsPos, numberOfRobots);
 
             printMap(map);
             System.out.println(score + " <-- your score");
             System.out.println("starting robots " + numberOfRobots);
             System.out.println("sum current robots " + (score/100));
+            clearScreen();
+            printMap(map);
         }
-
     }
 
     public static char[][] generateMap() {
@@ -171,6 +199,11 @@ public class Main {
         }
     }
 
+    public static void printStartMenu() {
+        System.out.println("𝘞𝘦𝘭𝘤𝘰𝘮𝘦 𝘵𝘰 𝘵𝘩𝘦 𝘙𝘖𝘉𝘖𝘛𝘚 © 𝘨𝘢𝘮𝘦!" + "\n" + "Press (s) to start.");
+
+    }
+
 
     public static int[] movePlayer(int[] playerCoordinates, char input, char[][] map) {
         int baseX = playerCoordinates[0];
@@ -194,7 +227,7 @@ public class Main {
         if (input == 'a' && currentMap[baseX][leftY] != '+') {
             playerPlace[1] = leftY;
         }
-        if (input == 't' && turn >= 3 ) {
+        if (input == 't' && turn >= 3) {
             playerPlace = teleport(map);
             turn = 0;
         }
@@ -303,23 +336,10 @@ public class Main {
     }
 
 
+
     public static int robotCollide(int[][] allRobots, int numberOfRobots) {
         int differentRobotsNum = 1;
         int score = 0;
-        /*int[][] currentRobots = new int[robotCounter][2];
-        for (int x = 0; x < robotCounter; x++) {
-            for (int y = 0; y < 2; y++) {
-                currentRobots[x][y] = listOfRobots.get(x)[y];
-            }
-        }
-        for (int x = 0; x < robotCounter - 1; x++) {
-            for (int y = x + 1; y < robotCounter; y++) {
-                if (Arrays.equals(currentRobots[x], currentRobots[y])) {
-                    listOfRobots.remove(y);
-                    System.out.println("removed robot");
-                }
-            }
-        }*/
         for (int x = 0; x < numberOfRobots - 1; x++){
             boolean robotDifferent = true;
             for (int y = x+1; y < numberOfRobots; y++){
