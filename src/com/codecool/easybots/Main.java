@@ -69,6 +69,7 @@ public class Main {
 
             System.out.println('\n' + "  w" + "\n" + "a s d   or t for teleport (usable every 3 turns)" + "\n");
             System.out.println(" @ <-- Your character" + "\n" + " # <-- Enemy robots" + "\n");
+            System.out.println("Your score: "+ score + "\n" );
             if (turn >= 3) {
                 System.out.println("You can use teleport! (t) ");
             } else {
@@ -83,7 +84,7 @@ public class Main {
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
             turn++;
             //if caught, break, game over
-            if (newPlayerCoordinates[0] == 0 && newPlayerCoordinates[1] == 0) {
+            if (newPlayerCoordinates[0] == 0 || newPlayerCoordinates[1] == 0) {
                 System.out.println("BIG LOSER");
                 endOfGame = true;
             }
@@ -106,7 +107,6 @@ public class Main {
             }
             clearScreen();
             printMap(map);
-            System.out.println(score + " <-- your score");
         }
     }
 
