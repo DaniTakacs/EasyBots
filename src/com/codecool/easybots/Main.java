@@ -39,21 +39,21 @@ public class Main {
 
         printMap(map);
 
-        for (int i = 0; i < allRobotsPos.length; i++) {
+        /*for (int i = 0; i < allRobotsPos.length; i++) {
             System.out.println(("Robot " + (i + 1) + " moves to " + allRobotsPos[i][0] + ", " + allRobotsPos[i][1] + "."));
 
-        }
+        }*/
 
         // Game loop
         while (!endOfGame) {
             int[] playerCoordinates = getCharacterPosition(map, player);
-
+            robotCounter = listOfRobots.size();
             System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "." + "\n");
             Scanner in = new Scanner(System.in);
             System.out.println("Turn " + turn);
             System.out.println("  w" + "\n" + "a s d    or t for teleport (usable every 3 turns)" + "\n" + "\n" + "Your turn to move!");
             char input = in.next().charAt(0);
-            score = robotCollide(allRobotsPos, score, numberOfRobots);
+
 
             //Player movement
             int[] newPlayerCoordinates = movePlayer(playerCoordinates, input, map);
@@ -80,9 +80,12 @@ public class Main {
                     }
                 }
             }
+            score = robotCollide(allRobotsPos, numberOfRobots);
 
             printMap(map);
             System.out.println(score + " <-- your score");
+            System.out.println("starting robots " + numberOfRobots);
+            System.out.println("sum current robots " + (score/100));
         }
 
     }
@@ -222,7 +225,8 @@ public class Main {
 
 
     private static void robotLogic(int[][] robotCoordinates, int[] playerPosition, int counter, int[] robotNewCoordinates, int distanceFromX, int distanceFromY) {
-        if (distanceFromX == 0 || distanceFromY == 0) {
+        boolean isOnPlayer = distanceFromX == 0 || distanceFromY == 0;
+        if (isOnPlayer) {
             if (distanceFromX == 0 && distanceFromY == 0) {
             } else {
                 if (distanceFromX == 0) {
@@ -299,17 +303,35 @@ public class Main {
     }
 
 
-    public static int robotCollide(int[][] allRobots, int score, int numberOfRobots) {
-
-
-        for (int x = 0; x < numberOfRobots - 1; x++) {
-            for (int y = x + 1; y < numberOfRobots; y++) {
-                if (Arrays.equals(allRobots[x], allRobots[y])) {
-                    System.out.println("SCORE + 100");
-                    score += 100;
-                }
+    public static int robotCollide(int[][] allRobots, int numberOfRobots) {
+        int differentRobotsNum = 1;
+        int score = 0;
+        /*int[][] currentRobots = new int[robotCounter][2];
+        for (int x = 0; x < robotCounter; x++) {
+            for (int y = 0; y < 2; y++) {
+                currentRobots[x][y] = listOfRobots.get(x)[y];
             }
         }
+        for (int x = 0; x < robotCounter - 1; x++) {
+            for (int y = x + 1; y < robotCounter; y++) {
+                if (Arrays.equals(currentRobots[x], currentRobots[y])) {
+                    listOfRobots.remove(y);
+                    System.out.println("removed robot");
+                }
+            }
+        }*/
+        for (int x = 0; x < numberOfRobots - 1; x++){
+            boolean robotDifferent = true;
+            for (int y = x+1; y < numberOfRobots; y++){
+                if (allRobots[x] == allRobots[y]){
+                    robotDifferent = false;
+                }
+            }
+            if (robotDifferent == true){
+                differentRobotsNum += 1;
+            }
+        }
+        score = (numberOfRobots - differentRobotsNum) * 100;
         return score;
     }
 
