@@ -191,7 +191,7 @@ public class Main {
         if (input == 'a' && currentMap[baseX][leftY] != '+') {
             playerPlace[1] = leftY;
         }
-        if (input == 't' && turn <= 3 ) {
+        if (input == 't' && turn >= 3 ) {
             playerPlace = teleport(map);
             turn = 0;
         }
