@@ -68,12 +68,13 @@ public class Main {
             System.out.println("Your player is at " + playerCoordinates[0] + ", " + playerCoordinates[1] + "." + "\n");
 
 
-
             Scanner in = new Scanner(System.in);
-
+            int remainingRobots = robotCollide(allRobotsPos, numberOfRobots);
+            score = (numberOfRobots - remainingRobots) * 100;
+            System.out.println("Remaining robots: " + remainingRobots);
             System.out.println('\n' + "  w" + "\n" + "a s d   or t for teleport (usable every 3 turns)" + "\n");
             System.out.println(" @ <-- Your character" + "\n" + " # <-- Enemy robots" + "\n");
-            System.out.println("Your score: "+ score + "\n" );
+            System.out.println("Your score: " + score + "\n");
             if (turn >= 3) {
                 System.out.println("You can use teleport! (t) ");
             } else {
@@ -102,7 +103,7 @@ public class Main {
 
             map = modifyMap(map, newPlayerCoordinates);
             //move Robots
-            if(!teleported){
+            if (!teleported) {
                 for (int x = 0; x < robotCounter; x++) {
                     allRobotsPos = moveRobot(allRobotsPos, map, x);
                 }
@@ -120,9 +121,7 @@ public class Main {
             }
 
             printMap(map);
-            System.out.println(score + " <-- your score");
             System.out.println("starting robots " + numberOfRobots);
-            System.out.println("sum current robots " + (score/100));
             clearScreen();
             printMap(map);
         }
@@ -251,7 +250,7 @@ public class Main {
     public static int[][] moveRobot(int[][] robotCoordinates, char[][] map, int robotNum) {
 
         int[] playerPosition = getCharacterPosition(map, '@');
-        if(playerPosition[0] == 0 && playerPosition[1] == 0){
+        if (playerPosition[0] == 0 && playerPosition[1] == 0) {
             System.out.println("Your game is over, try next time! :)");
             System.exit(0);
         }
@@ -282,8 +281,7 @@ public class Main {
         if (matchPlayerAxis) {
             if (sameRowAsPlayer && sameColumnAsPlayer) {
                 gameOver();
-            }
-            else {
+            } else {
                 if (sameRowAsPlayer) {
                     changeColumn(robotCoordinates, playerPosition, counter, robotNewCoordinates);
                 } else {
@@ -354,23 +352,24 @@ public class Main {
     }
 
 
-
     public static int robotCollide(int[][] allRobots, int numberOfRobots) {
         int differentRobotsNum = 1;
         int score = 0;
-        for (int x = 0; x < numberOfRobots - 1; x++){
-            boolean robotDifferent = true;
-            for (int y = x+1; y < numberOfRobots; y++){
-                if (allRobots[x] == allRobots[y]){
+        boolean robotDifferent = true;
+        //ArrayList<Integer> differentRobots = new ArrayList<>();
+        for (int x = 0; x < numberOfRobots - 1; x++) {
+            for (int y = x + 1; y < numberOfRobots; y++) {
+                if (Arrays.equals(allRobots[x], allRobots[y])) {
                     robotDifferent = false;
                 }
             }
             if (robotDifferent == true){
                 differentRobotsNum += 1;
             }
+            robotDifferent = true;
+
         }
-        score = (numberOfRobots - differentRobotsNum) * 100;
-        return score;
+        return differentRobotsNum;
     }
 
 
@@ -378,7 +377,8 @@ public class Main {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-    public static void gameOver(){
+
+    public static void gameOver() {
 
     }
 
